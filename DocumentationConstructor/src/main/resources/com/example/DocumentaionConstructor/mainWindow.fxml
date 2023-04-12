@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="623.0" maxWidth="657.0" minHeight="623.0" minWidth="657.0" prefHeight="623.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.DocumentaionConstructor.MainController">
+   <children>
+      <SplitPane fx:id="splitPane" dividerPositions="0.3519083969465649" layoutY="1.0" prefHeight="623.0" prefWidth="657.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <ListView fx:id="listView" prefHeight="621.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="136.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Button layoutX="56.0" layoutY="572.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="26.0" prefWidth="50.0" text="Save" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="572.0">
+                     <font>
+                        <Font name="AppleGothic Regular" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="327.0" layoutY="572.0" mnemonicParsing="false" onAction="#onFinishButtonClick" text="Finish" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="44.5" AnchorPane.topAnchor="572.0">
+                     <font>
+                        <Font name="AppleGothic Regular" size="13.0" />
+                     </font>
+                  </Button>
+                  <TextArea fx:id="textArea" layoutY="1.0" prefHeight="527.0" prefWidth="421.0" wrapText="true" AnchorPane.bottomAnchor="93.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0" />
+                  <Button layoutX="189.0" layoutY="572.0" mnemonicParsing="false" onAction="#onHelpButtonClick" text="Help" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="189.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="572.0">
+                     <font>
+                        <Font name="AppleGothic Regular" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

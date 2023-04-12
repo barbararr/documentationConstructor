@@ -1,0 +1,478 @@
+\documentclass[a4paper,14pt,oneside,openany]{memoir}
+
+%%% Задаем поля, отступы и межстрочный интервал %%%
+
+\usepackage[left=20mm, right=15mm, top=20mm, bottom=20mm]{geometry} % Пакет geometry с аргументами для определения полей
+\usepackage{setspace}
+\pagestyle{plain} % Убираем стандарные для данного класса верхние колонтитулы с заголовком текущей главы, оставляем только номер страницы снизу по центру
+\parindent=1.25cm % Абзацный отступ 1.25 см, приблизительно равно пяти знакам, как по ГОСТ
+\usepackage{indentfirst} % Добавляем отступ к первому абзацу
+%\linespread{1.3} % Межстрочный интервал (наиболее близко к вордовскому полуторному) - тут вместо этого используется команда OnehalfSpacing* 
+
+%%% Задаем языковые параметры и шрифт %%%
+
+%\usepackage[english, russian]{babel} 
+%\usepackage[T2A]{fontenc} % Настройки для русского языка как основного в тексте
+
+\iftutex
+% For LuaTeX or XeTeX Use Google's 
+% OpenType Noto fonts for typesetting
+% Russian text
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures={TeX}}
+\setmainfont{Noto Serif}
+\setsansfont{Noto Sans}
+\setmonofont{Noto Sans Mono}
+\else
+% For pdfTeX we must use old
+% 8-bit font technologies
+\usepackage[T2A]{fontenc}
+\fi
+%Hyphenation rules
+\usepackage{hyphenat}
+\hyphenation{ма-те-ма-ти-ка вос-ста-нав-ли-вать}
+\usepackage[english, russian]{babel}
+
+%%% Задаем стиль заголовков и подзаголовков в тексте %%%
+
+\setsecnumdepth{subsection} % Номера разделов считать до третьего уровня включительно, т.е. нумеруются только главы, секции, подсекции
+\renewcommand*{\chapterheadstart}{} % Переопределяем команду, задающую отступ над заголовком, чтобы отступа не было
+\renewcommand*{\printchaptername}{} % Переопределяем команду, печатающую слово "Глава", чтобы оно не печалось
+%\renewcommand*{\printchapternum}{} % То же самое для номера главы - тут не надо, номер главы оставляем
+\renewcommand*{\chapnumfont}{\normalfont\bfseries} % Меняем стиль шрифта для номера главы: нормальный размер, полужирный
+\renewcommand*{\afterchapternum}{\hspace{1em}} % Меняем разделитель между номером главы и названием
+\renewcommand*{\printchaptertitle}{\normalfont\bfseries\centering\MakeUppercase} % Меняем стиль написания для заголовка главы: нормальный размер, полужирный, центрированный, заглавными буквами
+\setbeforesecskip{20pt} % Задаем отступ перед заголовком секции
+\setaftersecskip{20pt} % Ставим такой же отступ после заголовка секции
+\setsecheadstyle{\raggedright\normalfont\bfseries} % Меняем стиль написания для заголовка секции: выравнивание по правому краю без переносов, нормальный размер, полужирный
+\setbeforesubsecskip{20pt} % Задаем отступ перед заголовком подсекции
+\setaftersubsecskip{20pt} % Ставим такой же отступ после заголовка подсекции
+\setsubsecheadstyle{\raggedright\normalfont\bfseries}  % Меняем стиль написания для заголовка подсекции: выравнивание по правому краю без переносов, нормальный размер, полужирный
+
+%%% Задаем параметры оглавления %%%
+
+\addto\captionsrussian{\renewcommand\contentsname{Содержание}} % Меняем слово "Оглавление" на "Содержание"
+\setrmarg{2.55em plus1fil} % Запрещаем переносы слов в оглавлении
+%\setlength{\cftbeforechapterskip}{0pt} % Эта команда убирает интервал между заголовками глав - тут не надо, так красивее смотрится
+\renewcommand{\aftertoctitle}{\afterchaptertitle \vspace{-\cftbeforechapterskip}} % Делаем отступ между словом "Содержание" и первой строкой таким же, как у заголовков глав
+%\renewcommand*{\chapternumberline}[1]{} % Делаем так, чтобы номер главы не печатался - тут не надо
+\renewcommand*{\cftchapternumwidth}{1.5em} % Ставим подходящий по размеру разделитель между номером главы и самим заголовком
+\renewcommand*{\cftchapterfont}{\normalfont\MakeUppercase} % Названия глав обычным шрифтом заглавными буквами
+\renewcommand*{\cftchapterpagefont}{\normalfont} % Номера страниц обычным шрифтом
+\renewcommand*{\cftchapterdotsep}{\cftdotsep} % Делаем точки до номера страницы после названий глав
+\renewcommand*{\cftdotsep}{1} % Задаем расстояние между точками
+\renewcommand*{\cftchapterleader}{\cftdotfill{\cftchapterdotsep}} % Делаем точки стандартной формы (по умолчанию они "жирные")
+\maxtocdepth{subsection} % В оглавление попадают только разделы первыхтрех уровней: главы, секции и подсекции
+
+%%% Выравнивание и переносы %%%
+
+%% http://tex.stackexchange.com/questions/241343/what-is-the-meaning-of-fussy-sloppy-emergencystretch-tolerance-hbadness
+%% http://www.latex-community.org/forum/viewtopic.php?p=70342#p70342
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em                             % В случае проблем регулировать в первую очередь
+\hfuzz 0.3pt
+\vfuzz \hfuzz
+%\dbottom
+%\sloppy                                            % Избавляемся от переполнений
+\clubpenalty=10000                                  % Запрещаем разрыв страницы после первой строки абзаца
+\widowpenalty=10000                                 % Запрещаем разрыв страницы после последней строки абзаца
+\brokenpenalty=4991                                 % Ограничение на разрыв страницы, если строка заканчивается переносом
+
+%%% Задаем параметры оформления рисунков и таблиц %%%
+
+\usepackage{graphicx, caption, subcaption} % Подгружаем пакеты для работы с графикой и настройки подписей
+\graphicspath{{images/}} % Определяем папку с рисунками
+\captionsetup[figure]{font=small, width=\textwidth, name=Рисунок, justification=centering} % Задаем параметры подписей к рисункам: маленький шрифт (в данном случае 12pt), ширина равна ширине текста, полнотекстовая надпись "Рисунок", выравнивание по центру
+\captionsetup[subfigure]{font=small} % Индексы подрисунков а), б) и так далее тоже шрифтом 12pt (по умолчанию делает еще меньше)
+\captionsetup[table]{singlelinecheck=false,font=small,width=\textwidth,justification=justified} % Задаем параметры подписей к таблицам: запрещаем переносы, маленький шрифт (в данном случае 12pt), ширина равна ширине текста, выравнивание по ширине
+\captiondelim{ --- } % Разделителем между номером рисунка/таблицы и текстом в подписи является длинное тире
+\setkeys{Gin}{width=\textwidth} % По умолчанию размер всех добавляемых рисунков будет подгоняться под ширину текста
+\renewcommand{\thesubfigure}{\asbuk{subfigure}} % Нумерация подрисунков строчными буквами кириллицы
+%\setlength{\abovecaptionskip}{0pt} % Отбивка над подписью - тут не меняем
+%\setlength{\belowcaptionskip}{0pt} % Отбивка под подписью - тут не меняем
+\usepackage[section]{placeins} % Объекты типа float (рисунки/таблицы) не вылезают за границы секциии, в которой они объявлены
+
+%%% Задаем параметры ссылок и гиперссылок %%% 
+
+\usepackage{hyperref}                               % Подгружаем нужный пакет
+\hypersetup{
+    colorlinks=true,                                % Все ссылки и гиперссылки цветные
+    linktoc=all,                                    % В оглавлении ссылки подключатся для всех отображаемых уровней
+    linktocpage=true,                               % Ссылка - только номер страницы, а не весь заголовок (так выглядит аккуратнее)
+    linkcolor=red,                                  % Цвет ссылок и гиперссылок - красный
+    citecolor=red                                   % Цвет цитировний - красный
+}
+
+%%% Настраиваем отображение списков %%%
+
+\usepackage{enumitem}                               % Подгружаем пакет для гибкой настройки списков
+\renewcommand*{\labelitemi}{\normalfont{--}}        % В ненумерованных списках для пунктов используем короткое тире
+\makeatletter
+    \AddEnumerateCounter{\asbuk}{\russian@alph}     % Объясняем пакету enumitem, как использовать asbuk
+\makeatother
+\renewcommand{\labelenumii}{\asbuk{enumii})}        % Кириллица для второго уровня нумерации
+\renewcommand{\labelenumiii}{\arabic{enumiii})}     % Арабские цифры для третьего уровня нумерации
+\setlist{noitemsep, leftmargin=*}                   % Убираем интервалы между пунками одного уровня в списке
+\setlist[1]{labelindent=\parindent}                 % Отступ у пунктов списка равен абзацному отступу
+\setlist[2]{leftmargin=\parindent}                  % Плюс еще один такой же отступ для следующего уровня
+\setlist[3]{leftmargin=\parindent}                  % И еще один для третьего уровня
+
+%%% Счетчики для нумерации объектов %%%
+
+\counterwithout{figure}{chapter}                    % Сквозная нумерация рисунков по документу
+\counterwithout{equation}{chapter}                  % Сквозная нумерация математических выражений по документу
+\counterwithout{table}{chapter}                     % Сквозная нумерация таблиц по документу
+
+
+%%% Прочие пакеты для расширения функционала %%%
+
+\usepackage{longtable,ltcaption}                    % Длинные таблицы
+\usepackage{multirow,makecell}                      % Улучшенное форматирование таблиц
+\usepackage{booktabs}                               % Еще один пакет для красивых таблиц
+\usepackage{soulutf8}                               % Поддержка переносоустойчивых подчёркиваний и зачёркиваний
+\usepackage{icomma}                                 % Запятая в десятичных дробях
+\usepackage{hyphenat}                               % Для красивых переносов
+\usepackage{textcomp}                               % Поддержка "сложных" печатных символов типа значков иены, копирайта и т.д.
+\usepackage[version=4]{mhchem}                      % Красивые химические уравнения
+\usepackage{amsmath}                                % Усовершенствование отображения математических выражений 
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\thepage\\$GOST_Document_Number}
+\fancyheadoffset{0mm}
+\fancyfootoffset{0mm}
+\setlength{\headheight}{17pt}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{ 
+    \fancyhf{}
+    \chead{\thepage\\$GOST_Document_Number}}
+\setcounter{page}{0}
+
+\usepackage{titlesec}
+
+\titleformat{\subsection}[block]{\normalfont\fontsize{14}{15}\bfseries}{\thesubsection}{1em}{}
+
+
+\titlespacing{\subsection}{\parindent}{20pt}{20pt}
+
+\usepackage{multirow}
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{longtable}
+
+\usepackage{lastpage}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+%Учреждение
+\begin{center}
+    \textbf{$Organization_Name}
+
+    \vspace{10pt}
+
+    $Faculty  \\
+    
+\end{center}
+
+%СОГЛАСОВАНО/УТВЕРЖДЕНО  
+    \noindent
+    \begin{minipage}{0.45\textwidth}\raggedright
+\begin{center}
+СОГЛАСОВАНО\\
+$Mentors_Position
+\_\_\_\_\_ $Mentors_First_Name_Patronymic_Last_Name\\
+$Mentors_Day_Month_Year г.\end{center}\strut
+\end{minipage} 
+\hfill
+\begin{minipage}{0.45\textwidth}\raggedright
+\begin{center}
+  УТВЕРЖДАЮ\\
+$Academic_Curator_Position\\
+\_\_\_\_\_ $Academic_Curator_First_Name_Patronymic_Last_Name\\
+$Academic_Curator_Day_Month_Year г.
+\end{center}\strut
+\end{minipage} \\
+    
+%Название 
+\vfill
+\begin{center}
+    \textbf{$Russian_Title \\  
+    $English_Title \\}
+
+    \vspace{20pt}
+
+    \textbf{Техническое задание \\  
+    ЛИСТ УТВЕРЖДЕНИЯ \\
+    $GOST_Document_Number\\}
+\end{center}
+
+%Исполнитель
+\vfill
+\begin{flushright}
+    Исполнитель: \\
+    Студент группы $Student_Group_Number\\
+    \_\_\_\_\_ $Student_First_Name_Patronymic_Last_Name\\
+    $Student_Day_Month_Year г.
+
+\end{flushright}
+\vfill
+
+%ГородГод
+\begin{center}
+    $City_Year
+\end{center}
+
+%СТРАНИЦА2
+\newpage
+\thispagestyle{empty}
+\noindent
+УТВЕРЖДЕН \\
+$GOST_Document_Number\\
+\vspace{150pt}
+\begin{center}
+    \textbf{$Russian_Title \\  
+    $English_Title \\}
+
+    \vspace{20pt}
+
+    \textbf{Техническое задание \\  
+    ЛИСТ УТВЕРЖДЕНИЯ \\
+    $GOST_Document_Number\\}
+    \vspace{20pt}
+    \textbf{Листов \pageref*{LastPage}\\}
+\end{center}
+
+\vfill
+
+%ГородГод
+\begin{center}
+    $City_Year
+\end{center}
+
+% АННОТАЦИЯ
+\newpage
+\chapter*{АННОТАЦИЯ}
+    Техническое задание – это основной документ, оговаривающий набор требований и порядок создания программного продукта, в соответствии с которым производится разработка программы, ее тестирование и приемка.
+    
+    Настоящее Техническое задание на разработку $Russian_Title содержит следующие разделы: «Введение», «Основание для разработки», «Назначение разработки», «Требования к программе», «Требования к программным документам», «Технико-экономические показатели», «Стадии и этапы разработки», «Порядок контроля и приемки» и приложения.
+    
+    В разделе «Введение» указано наименование и краткая характеристика области применения программы.
+    
+    В разделе «Основания для разработки» указан документ, на основании которого ведется разработка и наименование темы разработки.
+    
+    В разделе «Назначение разработки» указано функциональное и эксплуатационное назначение программного продукта.
+    
+    Раздел «Требования к программе» содержит основные требования к функциональным характеристикам, к надежности, к условиям эксплуатации, к составу и параметрам технических средств, к информационной и программной совместимости, к маркировке и упаковке, к транспортировке и хранению, а также специальные требования.
+    
+    Раздел «Требования к программным документам» содержит предварительный состав программной документации и специальные требования к ней.
+    
+    Раздел «Технико-экономические показатели» содержит ориентировочную экономическую эффективность, предполагаемую годовую потребность, экономические преимущества разработки программы.
+    
+    Раздел «Стадии и этапы разработки» содержит стадии разработки, этапы и содержание работ.
+    
+    В разделе «Порядок контроля и приемки» указаны общие требования к приемке работы.
+
+
+
+
+
+% СОДЕРЖАНИЕ
+\newpage
+\tableofcontents* 
+
+
+
+
+
+% 1 ГЛОССАРИЙ
+\newpage
+\chapter{ГЛОССАРИЙ}
+\label{ch:chap1}
+    $Glossary_Terms
+
+
+
+
+
+% 2 ВВЕДЕНИЕ
+\newpage
+\chapter{ВВЕДЕНИЕ}
+\label{ch:chap2}
+    \section{Наименование программы}
+        $Programm_Title_Russian
+        
+    \section{Наименование на английском языке}
+        $Programm_Title_English
+    
+    \section{Краткая характеристика и область назначения}
+        $Brief_Characteristic_And_Scope
+
+
+
+
+% 3 ОСНОВАНИЯ ДЛЯ РАЗРАБОТКИ
+\newpage
+\chapter{ОСНОВАНИЯ ДЛЯ РАЗРАБОТКИ}
+\label{ch:chap3}
+    \section{Документы, на основании которых ведется разработка}
+        $Documents_Based_On_Which_Is_Being_Developed
+        
+    \section{Название темы разработки на русском языке}
+        $Russian_Title
+    
+    \section{Название темы разработки на английском языке}
+        $English_Title
+
+
+
+
+% 4 НАЗНАЧЕНИЕ РАЗРАБОТКИ
+\newpage
+\chapter{НАЗНАЧЕНИЕ РАЗРАБОТКИ}
+\label{ch:chap4}
+    \section{Функциональное назначение}
+        $Functional_Purpose
+        
+    \section{Эксплуатационное назначение}
+        $Operational_Purpose
+
+
+
+
+% 5 ТРЕБОВАНИЯ К ПРОГРАММЕ
+\newpage
+\chapter{ТРЕБОВНИЯ К ПРОГРАММЕ}
+\label{ch:chap5}
+    \section{Требования к функциональным характеристикам}
+        \subsection{Состав выполняемых функций}
+         \hspace*{50pt}$Functions_Structure
+        \subsection{Организация входных данных}
+         \hspace*{50pt}$Input_Data_Organization
+        \subsection{Организация выходных данных}
+         \hspace*{50pt}$Output_Data_Organization
+     
+    \section{Требования к интерфейсу}
+        $Interface_Requirement
+        
+    \section{Требования к надежности}
+        $Requirements_For_Reliability
+        \subsection{Требования к обеспечению надежного (устойчивого) функционирования программы}
+         \hspace*{50pt}$Requirements_For_Reliable_Functionality
+        \subsection{Время восстановления после отказа}
+         \hspace*{50pt}$Time_Recovery_After_Failure
+    
+    \section{Условия эксплуатации}
+        \subsection{Климатические условия эксплуатации}
+         \hspace*{50pt}$Climate_Conditions_For_Exploitation
+        \subsection{Требования к видам обслуживания}
+         \hspace*{50pt}$Service_Types_Requirements
+        \subsection{Требования к численности и квалификации персонала}
+         \hspace*{50pt}$Requirements_Of_The_Number_And_Qualification_For_Personnel
+    
+    \section{Требования к составу и параметрам технических средств}
+        $Requirements_For_The_Composition_And_Parameters_Of_Technical_Means
+    
+    \section{Требования к информационной и программной совместимости}
+        \subsection{Требования к информационным структурам и методам решения}
+        \hspace*{50pt}$Requirements_For_Information_Structures_And_Solution_Methods
+        \subsection{Требования к программным средствам, используемым программой}
+        \hspace*{50pt}$Requirements_For_The_Software_Used_By_The_Program
+        \subsection{Требования к исходным кодам и языкам программирования}
+        \hspace*{50pt}$Requirements_For_Source_Codes_And_Programming_Languages
+    
+    \section{Требования к маркировке и упаковке}
+        $Labeling_And_Packaging_Requirements
+    
+    \section{Требования к транспортировке и хранению}
+        $Transportation_And_Storage_Requirements
+    
+
+
+
+% 6 ТРЕБОВАНИЯ К ПРОГРАММНОЙ ДОКУМЕНТАЦИИ
+\newpage
+\chapter{ТРЕБОВНИЯ К ПРОГРАММНОЙ ДОКУМЕНТАЦИИ}
+\label{ch:chap6}
+    \section{Состав программной документации}
+        $The_Composition_Of_The_Program_Documentation
+        
+    \section{Специальные требования к программной документации}
+        $Special_Requirements_For_Software_Documentation
+
+
+
+
+% 7 ТЕХНИКО-ЭКОНОМИЧЕСКИЕ ПОКАЗАТЕЛИ
+\newpage
+\chapter{ТЕХНИКО-ЭКОНОМИЧЕСКИЕ ПОКАЗАТЕЛИ}
+\label{ch:chap7}
+    \section{Ориентировочная экономическая эффективность}
+        $Estimated_Economic_Efficiency
+        
+    \section{Предполагаемая потребность}
+        $Estimated_Need
+        
+    \section{Экономические преимущества разработки по сравнению с отечественными и зарубежными аналогами}
+        $Economic_Advantages_Of_The_Development_In_Comparison_With_Domestic_And_Foreign_Analogues
+
+
+
+
+% 8 СТАДИИ И ЭТАПЫ РАЗРАБОТКИ
+\newpage
+\chapter{СТАДИИ И ЭТАПЫ РАЗРАБОТКИ}
+\label{ch:chap8}
+    \section{Стадии разработки}
+
+    \begin{longtable}{|p{3cm}|p{4cm}|p{5cm}|p{3cm}|}
+        \hline
+        \textbf{Стадии разработки} & \textbf{Этапы работ} & \textbf{Содержание работ} & \textbf{Временной период}  \\
+        \hline
+        1.Техническое задание & Подготовительные работы  & Постановка задачи, Сбор исходных теоретических материалов, Обоснование возможности решения поставленной задачи, Определение структуры входных и выходных данных, Предварительный выбор методов решения задач.
+         & $Dates_Of_The_Technical_Task_Stage \\
+        \cline{2-3}
+        & Разработка и утверждение технического задания & Определение требований к программе, Определение требований к техническим средствам, Определение стадий. Этапов и сроков разработки программы и документации на неё, Согласование и утверждение технического задания &\\
+        \hline
+        2.Рабочий проект & Проектирование программы  & Анализ существующих аналогов, Переработка полученной информации, Проектирование приложения. Определение структуры входных и выходных данных. Выбор алгоритмов и методов решения задач. Окончательный выбор технологии и средств реализации программы.
+         & $Dates_Of_The_Working_Project_Stage \\
+        \cline{2-3}
+         & Разработка программы  & Программирование и отладка программы. & \\
+        \cline{2-3}
+        & Разработка программной документации  & Разработка программных документов в соответствии с требованиями ГОСТ 19.101-77 &\\
+        \cline{2-3}
+         & Испытания программы  & Разработка, согласование и утверждение порядка и методики испытаний. Корректировка программы и программной документации по результатам испытаний. &\\
+        \hline
+        3.Внедрение & Подготовка и передача программы & Подготовка и передача программы и программной документации для сопровождения. & $Dates_Of_The_Implementation_Stage \\
+        \hline
+    \end{longtable}
+
+
+
+
+% 9 ПОРЯДОК КОНТРОЛЯ И ПРИЕМКИ
+\newpage
+\chapter{ПОРЯДОК КОНТРОЛЯ И ПРИЕМКИ}
+\label{ch:chap9}
+    \section{Виды испытаний}
+        $Types_Of_Tests
+    
+    \section{Общие требования к приемке работы}
+        $General_Requirements_For_Acceptance_Of_Work
+
+
+
+
+% СПИСОК ИСПОЛЬЗУЕМОЙ ЛИТЕРАТУРЫ
+\newpage
+\chapter{СПИСОК ИСПОЛЬЗУЕМОЙ ЛИТЕРАТУРЫ}
+\label{ch:chap10}
+    $List_Of_Used_Literature
+    
+\end{document}
