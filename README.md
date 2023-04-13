@@ -1,2 +1,2 @@
-# documentationConstructor
+# Documentation Constructor
 Курсовой проект Конструктор документации "Радость Научника"
